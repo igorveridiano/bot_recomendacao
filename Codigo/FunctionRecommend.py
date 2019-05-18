@@ -7,7 +7,7 @@ def cosine_similarity(v, w):
     return np.dot(v, w) / np.sqrt(np.dot(v, v) * np.dot(w, w))
 
 
-def recommend(movies, synopse):
+def recommender(movies, synopse):
     corpus = np.array([synopse, movies['text']])
 
     def clear_text(text):
@@ -35,13 +35,9 @@ def recommend(movies, synopse):
 
     features = np.array(list(map(fit_transform, corpus_clear)))
 
-    def text_similarities(id_text1, id_text2, text=corpus):
+    def text_similarities(id_text1, id_text2):
         simillarity = [cosine_similarity(features[id_text1], features[id_text2])]
         simillarity = np.array(simillarity)
         return simillarity[0]
-
-    print('Texto ananlisado -> ', corpus[0], '\n')
-
-    print('Texto: {} | Similaridade: {}'.format(movies['title'], round(text_similarities(0, 1), 2)))
 
     return text_similarities(0, 1)

@@ -1,14 +1,10 @@
 from telegram.ext import (Updater, CommandHandler, MessageHandler, Filters, RegexHandler,
                           ConversationHandler)
 import logging
-from sklearn.externals import joblib
 from imdb import IMDb
-
 from Codigo.Recommend import recommend
 
 imdb = IMDb()
-
-new_model = joblib.load('model.pkl')
 
 list_movies = {}
 
@@ -47,10 +43,8 @@ def recomender(bot, update):
         return NOT_FOUND_MOVIE
     user = update.message.from_user
     logger.info("Movie de %s: %s", user.first_name, update.message.text)
-    update.message.reply_text('Escolha o numero do filme correto que me contou, de acordo com os que são mostrados ' +
-                              '\n\n')
+    message = 'Escolha o numero do filme correto que me contou, de acordo com os que são mostrados ' + '\n\n'
     if list_movies.__len__() > 0:
-        message = ''
         for y in range(1, list_movies.__len__() + 1):
             message += str(y) + '-' + list_movies[y] + '\n'
         update.message.reply_text(message)
@@ -76,8 +70,9 @@ def aply_recommender(bot, update):
     update.message.text = ''
     for movies in recommend_list:
         update.message.text = update.message.text + movies + '\n\n'
-    update.message.reply_text('Aguarde enquanto nosso sistema faz uma recomendação para você \n\n' + update.message.text
-                              + '\n\n' + 'Obrigado por usar meus serviços! Espero poder ajuda-lo outra hora.')
+    update.message.reply_text('Aguarde enquanto nosso sistema faz uma recomendação para você: \n\n' +
+                              update.message.text + '\n\n'
+                              + 'Obrigado por usar meus serviços! Espero poder ajuda-lo outra hora.')
 
     return ConversationHandler.END
 
@@ -103,6 +98,8 @@ def not_found_movie(bot, update):
 def error(bot, update, error):
     """Log Errors caused by Updates."""
     logger.warning('Update "%s" causo um erro "%s"', update, error)
+
+    return ConversationHandler.END
 
 
 def main():

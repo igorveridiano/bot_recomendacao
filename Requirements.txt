@@ -1,0 +1,10 @@
+IMDbPY >= 6.6
+scikit-learn >= 0.21.1
+scipy 1.2.1
+python-telegram-bot >= 11.1.0
+pycparser >= 2.19
+pandas >= 0.24.2
+numpy >= 1.16.3
+nltk >= 3.4.1
+lxml >= 4.3.3
+joblib >= 0.13.2
