@@ -2,7 +2,7 @@ from telegram.ext import Updater, Filters
 from telegram.ext import CommandHandler, MessageHandler
 from imdb import IMDb
 
-updater = Updater(token="851095270:AAGYsUcw3zQ-iOmhPBE5A4EogpAXeBciZPA")
+updater = Updater(token="yourTokenTelegramBotHere")
 dispatcher = updater.dispatcher
 
 ia = IMDb()
